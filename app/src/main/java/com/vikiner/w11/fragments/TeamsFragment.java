@@ -1,0 +1,51 @@
+package com.vikiner.w11.fragments;
+
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.vikiner.w11.R;
+import com.vikiner.w11.adapter.TeamAdapter;
+import com.vikiner.w11.model.Team;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class TeamsFragment extends Fragment {
+
+    private static TeamsFragment instance;
+    private TeamAdapter adapter;
+
+    public static TeamsFragment getInstance() {
+        if (instance == null) instance = new TeamsFragment();
+        return instance;
+    }
+
+    public void updateData(List<Team> teams) {
+        if (adapter != null) adapter.setData(teams);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_list, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        adapter = new TeamAdapter();
+        recyclerView.setAdapter(adapter);
+        adapter.setData(new ArrayList<>());
+    }
+}
